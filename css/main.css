@@ -1,0 +1,33 @@
+#content{
+     margin: 0 auto;
+     width:fit-content;
+}
+
+h1{
+  text-align: center;
+}
+
+.clue_category, .clue_value{
+  height: 150px;
+  width: 150px;
+  text-align: center;
+}
+
+.clue_question{
+  background-color: blue;
+  color: white;
+  width: 250px;
+  text-align: center;
+  padding: 10px 10px 10px 10px;
+}
+
+.clue_answer{
+  color:white;
+  height: 150px;
+  width: 150px;
+  text-align: center;
+}
+
+.clue_answer:hover{
+  color:black;
+}

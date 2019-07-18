@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Jeopardy</title>
+  </head>
+  <body>
+    <h1>Jeopardy!</h1>
+    <div id='content'>
+      <table>
+        <tr>
+          <th>Category</th>
+          <th>Value</th>
+          <th>Question</th>
+          <th>Answer</th>
+        </tr>
+        {% for each_clue in clues %}
+        <tr class='clue_row'>
+          <td class='clue_category'>{{each_clue.category}}</td>
+          <td class='clue_value'>{{each_clue.value}}</td>
+          <td class='clue_question'>{{each_clue.question}}</td>
+          <td class='clue_answer'>{{each_clue.answer}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>
