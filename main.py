@@ -4,6 +4,7 @@ import jinja2
 from google.appengine.api import urlfetch
 import os
 import json
+from google.appengine.api import users
 
 # This initializes the jinja2 Environment.
 # This will be the same in every app that uses the jinja2 templating library.
@@ -54,9 +55,15 @@ class MainPage(webapp2.RequestHandler):
 
 class CategoriesPage(webapp2.RequestHandler):
     def get(self): #for a get request
+        user = users.get_current_user()
         self.response.headers['Content-Type'] = 'text/html'
         index_template = JINJA_ENV.get_template('templates/categories.html')
-        values = {'categories': get_categories(10)}
+        values = {
+            'categories': get_categories(10),
+            'user': user,
+            'login_url': users.create_login_url('/categories'),
+            'logout_url': users.create_logout_url('/categories'),
+        }
         self.response.write(index_template.render(values))
 
 class QuizPage(webapp2.RequestHandler):
