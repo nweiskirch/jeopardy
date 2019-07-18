@@ -30,7 +30,7 @@ clues = [clue1, clue2, clue3, clue4, clue5]
 class MainPage(webapp2.RequestHandler):
     def get(self): #for a get request
         self.response.headers['Content-Type'] = 'text/html'
-        index_template = JINJA_ENV.get_template('templates/index.html')
+        index_template = JINJA_ENV.get_template('templates/quiz.html')
         values = {'clues': clues}
         self.response.write(index_template.render(values))
 
