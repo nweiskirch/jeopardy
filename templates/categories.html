@@ -6,13 +6,19 @@
     <title>Jeopardy</title>
   </head>
   <body>
-    <h1>Categoriez!</h1>
-    <div id='content'>
-      <ul>
-        {% for each_category in categories %}
-        <li><a href='/quiz?category_param={{each_category.id}}'>{{each_category.title}}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
+    <form>
+      <h1>Categoriez!</h1>
+      <div id='content'>
+        <ul>
+          {% for each_category in categories %}
+          <li>
+            <a href='/quiz?category_param={{each_category.id}}'>{{each_category.title}}</a>
+            <input type="checkbox" name="" value="">
+          </li>
+          {% endfor %}
+        </ul>
+        <input type="submit" name="" value="Submit">
+      </div>
+    </form>
   </body>
 </html>
