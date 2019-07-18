@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Jeopardy</title>
+  </head>
+  <body>
+    <h1>Categoriez!</h1>
+    <div id='content'>
+      <ul>
+        {% for each_category in categories %}
+        <li><a href='/quiz?category_param={{each_category.id}}'>{{each_category.title}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>

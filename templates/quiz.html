@@ -17,7 +17,7 @@
         </tr>
         {% for each_clue in clues %}
         <tr class='clue_row'>
-          <td class='clue_category'>{{each_clue.category}}</td>
+          <td class='clue_category'>{{each_clue.category.title}}</td>
           <td class='clue_value'>{{each_clue.value}}</td>
           <td class='clue_question'>{{each_clue.question}}</td>
           <td class='clue_answer'>{{each_clue.answer}}</td>
