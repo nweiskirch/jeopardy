@@ -5,6 +5,8 @@ from google.appengine.api import urlfetch
 import os
 import json
 from google.appengine.api import users
+from google.appengine.ext import ndb
+
 
 # This initializes the jinja2 Environment.
 # This will be the same in every app that uses the jinja2 templating library.
@@ -45,6 +47,16 @@ def get_categories(num):
     category_resp = urlfetch.Fetch(category_url).content
     return json.loads(category_resp)
 
+def root_parent():
+    '''A single key to be used as the ancestor for all dog entries.
+
+    Allows for strong consistency at the cost of scalability.'''
+    return ndb.Key('Parent', 'default_parent')
+
+class FavoriteCategory(ndb.Model):
+    name = ndb.StringProperty()
+    user = ndb.UserProperty()
+
 # the handler section
 class MainPage(webapp2.RequestHandler):
     def get(self): #for a get request
@@ -58,13 +70,31 @@ class CategoriesPage(webapp2.RequestHandler):
         user = users.get_current_user()
         self.response.headers['Content-Type'] = 'text/html'
         index_template = JINJA_ENV.get_template('templates/categories.html')
+        faves = []
+        if user is not None:
+            faves = FavoriteCategory.query(FavoriteCategory.user == user, ancestor=root_parent()).fetch()
+        print faves
         values = {
             'categories': get_categories(10),
             'user': user,
             'login_url': users.create_login_url('/categories'),
             'logout_url': users.create_logout_url('/categories'),
+            'faves': faves
         }
         self.response.write(index_template.render(values))
+
+    def post(self):
+        new_name = self.request.get('fave_category')
+        user = users.get_current_user()
+        faves = FavoriteCategory.query(FavoriteCategory.user == user, FavoriteCategory.name == new_name, ancestor=root_parent()).fetch()
+        if len(faves) == 0:
+            new_fave = FavoriteCategory(parent=root_parent())
+            new_fave.name = new_name
+            new_fave.user = user
+            new_fave.put()
+        # redirect to '/' so that the get() version of this handler will run
+        # and show the list of dogs.
+        self.redirect('/categories')
 
 class QuizPage(webapp2.RequestHandler):
     def get(self): #for a get request

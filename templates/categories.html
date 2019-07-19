@@ -6,7 +6,7 @@
     <title>Jeopardy</title>
   </head>
   <body>
-    <form>
+    <form method="post">
       <h1>Categoriez!</h1>
       {% if user %}
       <a href="{{logout_url}}">Logout</a>
@@ -15,7 +15,7 @@
           {% for each_category in categories %}
           <li>
             <a href='/quiz?category_param={{each_category.id}}'>{{each_category.title}}</a>
-            <input type="checkbox" name="" value="">
+            <input type="checkbox" name="fave_category" value="{{each_category.title}}">
           </li>
           {% endfor %}
         </ul>
@@ -24,6 +24,9 @@
       {% else %}
       <a href="{{login_url}}">Login</a>
       {% endif %}
+      {% for fave in faves %}
+      <div>{{fave.name}}</div>
+      {% endfor %}
     </form>
   </body>
 </html>
